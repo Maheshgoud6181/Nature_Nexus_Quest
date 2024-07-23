@@ -1,0 +1,31 @@
+/* NavbarStyles.css */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #4caf50;
+  padding: 10px;
+  height: 70px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.hamburger {
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+}
+
+.title {
+  font-size: 32px; /* Increase the font size */
+  font-weight: bold;
+  color: white;
+}
+
+.clock {
+  font-size: 18px;
+  color: white;
+}

@@ -1,0 +1,50 @@
+/* SidebarStyles.css */
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0; /* Change left to right */
+  background-color: #f4f4f4; /* Light background color */
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 70px; /* Adjust padding to prevent content from getting below the navbar */
+}
+
+.sidebar.open {
+  width: 60%; /* Responsive width */
+}
+
+@media (min-width: 768px) {
+  .sidebar.open {
+    width: 400px; /* Fixed width for larger screens */
+  }
+}
+
+.closebtn {
+  position: absolute;
+  top: 20px;
+  left: 25px; /* Change right to left */
+  font-size: 36px;
+  cursor: pointer;
+  color: white;
+  background: none;
+  border: none;
+}
+
+.rulesbtn {
+  font-size: 20px;
+  color: white;
+  background-color: #4caf50;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: 20px;
+  transition: background-color 0.3s;
+}
+
+.rulesbtn:hover {
+  background-color: #45a049;
+}
