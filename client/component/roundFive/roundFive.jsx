@@ -1,85 +1,124 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './roundFive.css'; // Import your CSS file for styling
-import { RoundFiveQuestions } from '../../data/questions/roundFiveQuestions';
 
+const RoundFiveQuestions = [
+  {
+    questionParts: ["When the ", " effect works a little too "],
+    answer: ["greenhouse", "good"],
+    image: "image6.png"
+  },
+  {
+    questionParts: ["When you're trying to enjoy the weekend ", " but you have wormed the planet to inhabitable "],
+    answer: ["outdoor", "heat"],
+    image: "image1.png"
+  },
+  {
+    questionParts: ["Not sure if you don't know how to ", " or if you hate ", " creatured"],
+    answer: ["recycle", "innocent"],
+    image: "image2.png"
+  },
+  {
+    questionParts: ["Vegans when they ", " what makes fossil "],
+    answer: ["realise", "fuels"],
+    image: "image3.png"
+  }
+];
 
 const RoundFive = () => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState(new Array(RoundFiveQuestions.length).fill(null)); // Initialize answers array
+  const [index, setIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState(RoundFiveQuestions.map(q => q.answer.map(ans => Array(ans.length).fill(""))));
+  const [showscore, setShowscore] = useState(false);
+  const inputRefs = useRef([]);
 
-  // Initialize currentAnswers state with empty strings for each question
-  const [currentAnswers, setCurrentAnswers] = useState(RoundFiveQuestions.map(question => new Array(question.wordLengths.length).fill('')));
+  useEffect(() => {
+    inputRefs.current = inputRefs.current.slice(0, RoundFiveQuestions[index].answer.reduce((sum, ans) => sum + ans.length, 0));
+  }, [index]);
 
-  const handleInputChange = (event, questionIndex, wordIndex) => {
-    const { value } = event.target;
-    setCurrentAnswers((prevAnswers) => {
-      const updatedAnswers = [...prevAnswers];
-      updatedAnswers[questionIndex][wordIndex] = value.slice(0, RoundFiveQuestions[questionIndex].wordLengths[wordIndex]); // Limit answer length for each word
-      return updatedAnswers;
-    });
-  };
+  function handleInputChange(e, answerIndex, charIndex) {
+    const newAnswers = [...userAnswers];
+    newAnswers[index][answerIndex][charIndex] = e.target.value;
+    setUserAnswers(newAnswers);
 
-  const handleNext = () => {
-    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-  };
+    if (e.target.value && charIndex < newAnswers[index][answerIndex].length - 1) {
+      inputRefs.current[calculateInputIndex(answerIndex, charIndex) + 1].focus();
+    }
+  }
 
-  const handlePrev = () => {
-    setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
-  };
+  function handleKeyDown(e, answerIndex, charIndex) {
+    if (e.key === 'Backspace' && !userAnswers[index][answerIndex][charIndex]) {
+      const prevIndex = calculateInputIndex(answerIndex, charIndex) - 1;
+      if (prevIndex >= 0) {
+        inputRefs.current[prevIndex].focus();
+      }
+    }
+  }
 
-  const handleSubmit = () => {
-    // Create an array to hold answers for all questions
-    const allAnswers = RoundFiveQuestions.map((question, index) => {
-      const questionId = question.id;
-      const filteredAnswers = currentAnswers[index].filter(answer => answer.trim() !== ''); // Filter out empty answers
-      return {
-        questionId,
-        answers: filteredAnswers.length > 0 ? filteredAnswers : null, // Store answers or null if none entered
-      };
-    });
-  
-    setAnswers(allAnswers); // Update answers state with all answers for logging or further processing
-    console.log('All Answers:', allAnswers);
-    // Optionally, you can perform further actions here, such as validating answers or sending data to a server
-  };
+  function calculateInputIndex(answerIndex, charIndex) {
+    return RoundFiveQuestions[index].answer.slice(0, answerIndex).reduce((sum, ans) => sum + ans.length, 0) + charIndex;
+  }
 
-  // Retrieve current question based on currentQuestionIndex
-  const currentQuestion = RoundFiveQuestions[currentQuestionIndex];
+  function totalscore() {
+    return userAnswers.reduce((score, userAnswer, i) => {
+      const correctAnswers = RoundFiveQuestions[i].answer;
+      const isCorrect = userAnswer.every((answer, j) => answer.join('').trim().toLowerCase() === correctAnswers[j].toLowerCase());
+      return score + (isCorrect ? 1 : 0);
+    }, 0);
+  }
+
+  function nextq() {
+    if (index < RoundFiveQuestions.length - 1) {
+      setIndex(index + 1);
+    }
+  }
+
+  function prevs() {
+    if (index > 0) {
+      setIndex(index - 1);
+    }
+  }
 
   return (
-    <div className="container">
-      <h1 className="header">ROUND 5:Meme Causes</h1>
-      <div className="questionContainer">
-        <img src={currentQuestion.photoPath} alt={`Question ${currentQuestion.id}`} className="questionImage" />
-        <div className="answerInputs">
-          {currentQuestion.wordLengths.map((exactLength, wordIndex) => (
-            <input
-              key={wordIndex}
-              type="text"
-              className={`answerInput ${currentAnswers[currentQuestionIndex][wordIndex].length !== exactLength ? 'invalid' : ''}`}
-              placeholder={`Word ${wordIndex + 1} (${exactLength} characters)`}
-              value={currentAnswers[currentQuestionIndex][wordIndex]}
-              onChange={(event) => handleInputChange(event, currentQuestionIndex, wordIndex)}
-            />
-          ))}
-        </div>
-      </div>
-      <div className="navigationContainer">
-        <button className="navButton" onClick={handlePrev} disabled={currentQuestionIndex === 0}>
-          Previous
-        </button>
-        {currentQuestionIndex === RoundFiveQuestions.length - 1 ? (
-          <button className="submitButton" onClick={handleSubmit}>
-            Submit
-          </button>
+    <div className='container'>
+      <h1 className='header'>Round 5 : Meme Quiz</h1>
+      <div className='questionContainer'>
+        {showscore ? (
+          <h1>Total Score: {totalscore()}/{RoundFiveQuestions.length}</h1>
         ) : (
-          <button className="navButton" onClick={handleNext}>
-            Next
-          </button>
+          <div>
+            <h1 className='question'>
+              Q.{index + 1})&emsp;
+              {RoundFiveQuestions[index].questionParts.map((part, partIndex) => (
+                <span key={partIndex}>
+                  {part}
+                  {partIndex < RoundFiveQuestions[index].answer.length && RoundFiveQuestions[index].answer[partIndex].split('').map((char, charIndex) => (
+                    <input
+                      key={charIndex}
+                      type="text"
+                      maxLength="1"
+                      value={userAnswers[index][partIndex][charIndex]}
+                      onChange={(e) => handleInputChange(e, partIndex, charIndex)}
+                      onKeyDown={(e) => handleKeyDown(e, partIndex, charIndex)}
+                      ref={el => inputRefs.current[calculateInputIndex(partIndex, charIndex)] = el}
+                      className="blank-input"
+                    />
+                  ))}
+                </span>
+              ))}
+            </h1>
+            {RoundFiveQuestions[index].image && (
+              <img src={RoundFiveQuestions[index].image} alt={`Question ${index + 1}`} className="question-image" />
+            )}
+            <button className='pre' onClick={prevs}>Prev</button>
+            {index === RoundFiveQuestions.length - 1 ? (
+              <button className='submit' onClick={() => setShowscore(true)}>Submit</button>
+            ) : (
+              <button className='nextbtn' onClick={nextq}>Next</button>
+            )}
+          </div>
         )}
       </div>
     </div>
   );
-};
+}
 
 export default RoundFive;

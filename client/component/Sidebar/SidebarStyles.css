@@ -10,6 +10,7 @@
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 70px; /* Adjust padding to prevent content from getting below the navbar */
+  background-color: #e0f7fa;
 }
 
 .sidebar.open {
@@ -28,7 +29,7 @@
   left: 25px; /* Change right to left */
   font-size: 36px;
   cursor: pointer;
-  color: white;
+  color: rgb(38, 22, 22);
   background: none;
   border: none;
 }
@@ -43,6 +44,10 @@
   margin-top: 20px;
   margin-left: 20px;
   transition: background-color 0.3s;
+  border-radius: 12px;
+  border: solid black;
+
+  
 }
 
 .rulesbtn:hover {

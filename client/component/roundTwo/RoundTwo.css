@@ -55,11 +55,15 @@
   
   .optionButton:hover {
     background-color: #007bff;
+    background:radial-gradient(934px at 6% 39.5%, rgb(255, 35, 90) 0.2%, rgb(255, 35, 144) 54.8%, rgb(250, 99, 160) 93.4%)  ;
+  
     color: white;
   }
   
   .optionButton.selected {
     background-color: #28a745;
+    background:radial-gradient(934px at 6% 39.5%, rgb(255, 35, 90) 0.2%, rgb(255, 35, 144) 54.8%, rgb(250, 99, 160) 93.4%)  ;
+  
     color: white;
   }
   

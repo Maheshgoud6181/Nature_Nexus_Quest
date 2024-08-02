@@ -62,6 +62,7 @@
   
   .optionButton:hover {
     background-color: #007bff;
+    background-color: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
     color: white;
   }
   
@@ -86,10 +87,11 @@
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
     color: white;
+    background-color: #28a745;
   }
   
   .navButton {
-    background-color: #007bff;
+    
   }
   
   .navButton:disabled {
@@ -101,3 +103,189 @@
     background-color: #28a745;
   }
   
+
+
+  .button {
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Container styling */
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Header styling */
+.header {
+  font-size: 1em;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: palatino,'serif';
+}
+
+/* Video player styling */
+.videoPlayer {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Question container styling */
+.questionContainer {
+  background-color: #f0f8ff; /* Light background color */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Question text styling */
+.questionText {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+/* Options container styling */
+.optionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Option button styling */
+.optionButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.optionButton:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.optionButton.selected {
+  background-color: #0056b3;
+}
+
+/* Navigation container styling */
+.navigationContainer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Navigation button styling */
+.navButton, .submitButton {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navButton:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.submitButton {
+  background-color: #dc3545;
+}
+
+.submitButton:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
+
+/* Disabled button styling */
+.navButton:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+
+
+
+
+
+
+.eight h1 {
+  text-align:center;
+ 
+  text-transform:uppercase;
+  font-size:26px; letter-spacing:1px;
+  
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 16px 0;
+  grid-gap: 22px;
+  
+}
+
+.eight h1:after,.eight h1:before {
+  content: " ";
+  display: block;
+  border-bottom: 2px solid #ccc;
+  background-color:#f8f8f8;
+}
